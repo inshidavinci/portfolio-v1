@@ -1,0 +1,51 @@
+# Assets folder
+
+Drop your real files in here using these exact names (or update the file paths in the HTML if you rename them):
+
+| File to add | Used on | Notes |
+|---|---|---|
+| `Inshaal-Siddiqui-Resume.pdf` | Nav (all pages), Contact page | Linked from the resume icon and the "Resume" button on the Contact page. |
+| Your headshot / photos | Home page, About page | See "Photo frames" below. |
+| Project screenshots | Projects page | See "Project & blog images" below. |
+| Campaign visuals | Marketing page | See "Project & blog images" below. |
+| Blog photos | Blog page | Optional — can stay as dashed placeholder frames until you write real entries. |
+| `bee.svg` (optional) | Home page | The homepage currently uses a simple inline SVG bee. If you have your own cartoon bee illustration, see "Swapping in a real bee illustration" below. |
+| `favicon.ico` / `favicon.png` | All pages | Not yet linked — add a `<link rel="icon" href="assets/favicon.png">` inside each `<head>` once you have one. |
+
+## Photo frames (home page + about page)
+
+Every dashed rectangle with "photo of me" / "swap this frame" text is a placeholder. To swap one in, find the `.frame` or `.about-frame` div in `index.html` / `about.html` and replace the inner `<span>`/`<small>` with an `<img>` tag, e.g.:
+
+```html
+<!-- before -->
+<div class="frame"><span>photo of me</span><small>swap this frame</small></div>
+
+<!-- after -->
+<div class="frame"><img src="assets/photo-1.jpg" alt="Inshaal Siddiqui"></div>
+```
+
+The CSS already handles `object-fit: cover` and rounded corners, so any reasonably-sized image will fit cleanly.
+
+## Project & blog images
+
+Same pattern on `.card-frame` (in `projects.html`, `marketing.html`, `blog.html`) and `.modal-frame` (inside each `<template>` block):
+
+```html
+<!-- before -->
+<div class="card-frame"><span>project image</span></div>
+
+<!-- after -->
+<div class="card-frame"><img src="assets/muslimah-network.jpg" alt="Muslimah Network project preview"></div>
+```
+
+Do this for both the card (grid preview) and the matching `<template data-detail="...">` (the expanded modal) so the image shows up in both places.
+
+## Swapping in a real bee illustration
+
+`index.html` currently draws four small bees with inline SVG (`.bee` elements in the `<header class="hero">`). If you have a cartoon bee image/illustration you'd rather use, replace the inline `<svg>` inside each `.bee` div with:
+
+```html
+<div class="bee bee-1"><img src="assets/bee.png" alt=""></div>
+```
+
+The `.bee` CSS class already handles size and the gentle floating animation — just make sure your image has a transparent background so it sits naturally on the pink field.

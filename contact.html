@@ -1,0 +1,51 @@
+// ============================================================
+// Mobile nav toggle
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const toggle = document.querySelector('.nav-toggle');
+  const tabs = document.querySelector('.nav-tabs');
+  if (toggle && tabs){
+    toggle.addEventListener('click', () => {
+      tabs.classList.toggle('open');
+    });
+  }
+
+  // ============================================================
+  // Card -> modal expansion
+  // Each [data-card] reads its detail content from a matching
+  // <template data-detail="ID"> on the same page.
+  // ============================================================
+  const backdrop = document.querySelector('.modal-backdrop');
+  if (!backdrop) return;
+
+  const modal = backdrop.querySelector('.modal');
+  const closeBtn = backdrop.querySelector('.modal-close');
+
+  function openModal(id){
+    const tpl = document.querySelector(`template[data-detail="${id}"]`);
+    if (!tpl) return;
+    modal.innerHTML = '';
+    modal.appendChild(closeBtn);
+    modal.appendChild(tpl.content.cloneNode(true));
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal(){
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-card]').forEach(card => {
+    card.addEventListener('click', () => openModal(card.dataset.card));
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.addEventListener('keypress', e => {
+      if (e.key === 'Enter' || e.key === ' ') openModal(card.dataset.card);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+});
